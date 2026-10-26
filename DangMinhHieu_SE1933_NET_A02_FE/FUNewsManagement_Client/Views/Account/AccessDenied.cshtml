@@ -1,0 +1,25 @@
+@{
+    ViewData["Title"] = "Access Denied";
+}
+
+<div class="row justify-content-center my-5 text-center">
+    <div class="col-md-6">
+        <div class="card card-modern p-5 border-0 shadow-lg">
+            <div class="mb-3 text-danger">
+                <i class="bi bi-shield-x fs-1" style="font-size: 4rem !important;"></i>
+            </div>
+            <h2 class="fw-bold text-danger mb-2">Access Denied (403)</h2>
+            <p class="text-muted mb-4">
+                You do not have the required permissions to access this page or resource. Please contact your system administrator if you believe this is a mistake.
+            </p>
+            <div class="d-flex justify-content-center gap-2">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-primary">
+                    <i class="bi bi-house-door me-1"></i> Back to Home
+                </a>
+                <a asp-controller="Account" asp-action="Login" class="btn btn-outline-secondary">
+                    <i class="bi bi-box-arrow-in-right me-1"></i> Re-login
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

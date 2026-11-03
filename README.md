@@ -7,19 +7,36 @@
 
 ## 1. PROJECT ARCHITECTURE OVERVIEW
 
-The system is developed using the **3-Tier Architecture (Layered Pattern)** divided across two separate, decoupled solutions:
+The system is developed using the **3-Tier Architecture (Layered Pattern)** organized under a master solution `16_DangMinhHieu_Assignment2.sln` containing **2 dedicated C# Projects**:
 
 ```
 16_DangMinhHieu_Assignment2_PRN232/
-├── DangMinhHieu_SE1933_NET_A02_BE/
-│   ├── DangMinhHieu_SE1933_NET_A02_BE.sln
-│   ├── FUNewsManagement_API/         # Presentation Layer (ASP.NET Core Web API + OData + JWT)
-│   ├── FUNewsManagement_BLL/         # Business Logic Layer (Services, DTOs, JWT Token Generator)
-│   └── FUNewsManagement_DAL/         # Data Access Layer (EF Core, DbContext, Singleton DAOs, Repositories)
+├── 16_DangMinhHieu_Assignment2.sln      # Master Solution (Chứa trực tiếp 2 Project BE & FE)
 │
-└── DangMinhHieu_SE1933_NET_A02_FE/
+├── DangMinhHieu_SE1933_NET_A02_BE/      # Back-End Project (Web API + OData + JWT + 3-Tier Layered)
+│   ├── DangMinhHieu_SE1933_NET_A02_BE.csproj
+│   ├── DangMinhHieu_SE1933_NET_A02_BE.sln
+│   ├── Controllers/                  # Presentation Layer (API Controllers & Endpoints)
+│   ├── Services/                     # Business Logic Layer (Services & Logic)
+│   ├── DTOs/                         # Data Transfer Objects
+│   ├── Repositories/                 # Repository Pattern (IRepository & Implementations)
+│   ├── DAOs/                         # Singleton Data Access Objects
+│   ├── Entities/                     # EF Core DbContext & Models
+│   ├── ODataQueryOptionsFilter.cs    # OData Swagger Filter
+│   ├── Program.cs                    # Dependency Injection & Middleware
+│   └── appsettings.json              # Connection String & JWT Config
+│
+└── DangMinhHieu_SE1933_NET_A02_FE/      # Front-End Project (ASP.NET Core MVC Client)
+    ├── DangMinhHieu_SE1933_NET_A02_FE.csproj
     ├── DangMinhHieu_SE1933_NET_A02_FE.sln
-    └── FUNewsManagement_Client/      # Presentation Layer (ASP.NET Core MVC + HttpClient Bearer + Modals)
+    ├── Controllers/                  # MVC Controllers (Auth, News, Categories, Accounts, Profile)
+    ├── Filters/                      # ApiExceptionFilter (Handles 401/403 redirects)
+    ├── Models/                       # ViewModels
+    ├── Services/                     # IApiService & HttpClient with JWT injection
+    ├── Views/                        # Razor Views with Modals & SweetAlert2
+    ├── wwwroot/                      # Static assets (Bootstrap, SweetAlert2, CSS, JS)
+    ├── Program.cs                    # MVC Pipeline, Session, Cookie Auth
+    └── appsettings.json              # API Base URL Config
 ```
 
 ### Key Design Patterns & Technical Upgrades
@@ -64,7 +81,7 @@ The system is developed using the **3-Tier Architecture (Layered Pattern)** divi
 - Database `FUNewsManagement` initialized (use database script from Assignment 1)
 
 ### Connection String Configuration
-Back-End connection string is configured in `DangMinhHieu_SE1933_NET_A02_BE/FUNewsManagement_API/appsettings.json`:
+Back-End connection string is configured in `DangMinhHieu_SE1933_NET_A02_BE/appsettings.json`:
 ```json
 "ConnectionStrings": {
   "DefaultConnectionString": "Server=(local);Database=FUNewsManagement;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=True;"
@@ -75,7 +92,7 @@ Back-End connection string is configured in `DangMinhHieu_SE1933_NET_A02_BE/FUNe
 
 **Step 1: Start Back-End Web API (Port 5173)**
 ```powershell
-cd DangMinhHieu_SE1933_NET_A02_BE/FUNewsManagement_API
+cd DangMinhHieu_SE1933_NET_A02_BE
 dotnet run
 ```
 - API Base URL: `http://localhost:5173`
@@ -85,7 +102,7 @@ dotnet run
 **Step 2: Start Front-End Client (Port 5076)**
 Open a second terminal window:
 ```powershell
-cd DangMinhHieu_SE1933_NET_A02_FE/FUNewsManagement_Client
+cd DangMinhHieu_SE1933_NET_A02_FE
 dotnet run
 ```
 - Front-End URL: `http://localhost:5076`
